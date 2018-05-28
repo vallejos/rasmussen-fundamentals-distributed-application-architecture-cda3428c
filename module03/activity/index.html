@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Module 03 Activity - Leonardo Vallejos</title>
+
+    <style>
+        #draggable {
+            width: 200px;
+            height: 20px;
+            text-align: center;
+            background: white;
+        }
+        
+        .dropzone {
+            width: 200px;
+            height: 20px;
+            background: blueviolet;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h1>Module 03 Activity</h1>
+
+    <button id="btn1" onclick="handleEvent(1)">Click Me!</button>
+
+    <button id="btn2" onmouseover="handleEvent(2)">Mouse Over Me!</button>
+
+    <p id="output"></p>
+
+    <div class="dropzone">
+            <div id="draggable" draggable="true" ondragstart="event.dataTransfer.setData('text/plain',null)">
+              Drag Me!
+            </div>
+          </div>
+          <div class="dropzone"></div>
+          <div class="dropzone"></div>
+          <div class="dropzone"></div>
+<script>
+
+var dragged;
+
+document.addEventListener("drag", function( event ) {
+    console.log("Drag Me!! Drag Me!!");
+}, false);
+
+document.addEventListener("dragstart", function( event ) {
+    // store a ref. on the dragged elem
+    dragged = event.target;
+    // make it half transparent
+    event.target.style.opacity = .5;
+}, false);
+
+document.addEventListener("dragend", function( event ) {
+    // reset the transparency
+    event.target.style.opacity = "";
+}, false);
+
+/* events fired on the drop targets */
+document.addEventListener("dragover", function( event ) {
+    // prevent default to allow drop
+    event.preventDefault();
+}, false);
+
+document.addEventListener("dragenter", function( event ) {
+    // highlight potential drop target when the draggable element enters it
+    if ( event.target.className == "dropzone" ) {
+        event.target.style.background = "purple";
+    }
+
+}, false);
+
+document.addEventListener("dragleave", function( event ) {
+    // reset background of potential drop target when the draggable element leaves it
+    if ( event.target.className == "dropzone" ) {
+        event.target.style.background = "";
+    }
+
+}, false);
+
+document.addEventListener("drop", function( event ) {
+    // prevent default action (open as link for some elements)
+    event.preventDefault();
+    // move dragged elem to the selected drop target
+    if ( event.target.className == "dropzone" ) {
+        event.target.style.background = "";
+        dragged.parentNode.removeChild( dragged );
+        event.target.appendChild( dragged );
+    }
+  
+}, false);
+
+function getRandomColor() {
+  var letters = '0123456789ABCDEF';
+  var color = '#';
+  for (var i = 0; i < 6; i++) {
+    color += letters[Math.floor(Math.random() * 16)];
+  }
+  return color;
+}
+
+function handleEvent(evt) {
+    switch (evt) {
+        case 1:
+            let a = document.getElementsByClassName("dropzone");
+            a[0].style = "background: " + getRandomColor();
+            a[1].style = "background: " + getRandomColor();
+            a[2].style = "background: " + getRandomColor();
+            break;
+        case 2:
+            document.getElementById("btn2").style.opacity = .5;
+
+            document.getElementById("output").innerHTML = "Hello World for Event 2. This Message will self destroy in 5 seconds...";
+            setTimeout(function () {
+                document.getElementById("output").innerHTML = "";
+                document.getElementById("btn2").style.opacity = 1;
+            }, 5000);
+            break;
+    }
+}
+</script>
+
+</body>
+</html>
