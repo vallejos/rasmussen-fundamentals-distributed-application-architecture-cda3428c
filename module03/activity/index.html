@@ -113,7 +113,7 @@ function handleEvent(evt) {
         case 2:
             document.getElementById("btn2").style.opacity = .5;
 
-            document.getElementById("output").innerHTML = "Hello World for Event 2. This Message will self destroy in 5 seconds...";
+            document.getElementById("output").innerHTML = "Hello World for Event 2. Today is " + Date() + "This Message will self destroy in 5 seconds...";
             setTimeout(function () {
                 document.getElementById("output").innerHTML = "";
                 document.getElementById("btn2").style.opacity = 1;
